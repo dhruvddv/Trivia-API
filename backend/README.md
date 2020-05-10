@@ -140,6 +140,58 @@ The error codes currently returned are:
 #### GET /questions
 - General:
   - Returns all questions
+  - questions ar### Getting Started
+
+* Backend Base URL: `http://127.0.0.1:5000/`
+* Frontend Base URL: `http://127.0.0.1:3000/`
+* Authentication: Authentication or API keys are not used in the project yet.
+
+### Error Handling
+
+Errors are returned in the following json format:
+
+```json
+      {
+        "success": "False",
+        "error": 422,
+        "message": "Unprocessable entity",
+      }
+```
+
+The error codes currently returned are:
+
+* 400 – bad request
+* 404 – resource not found
+* 422 – unprocessable
+* 500 – internal server error
+
+
+### Endpoints
+
+#### GET /categories
+
+- General: 
+  - Returns all the categories.
+
+- Sample:  `curl http://127.0.0.1:5000/categories`
+
+```json
+    {
+        "categories": {
+            "1": "Science", 
+            "2": "Art", 
+            "3": "Geography", 
+            "4": "History", 
+            "5": "Entertainment", 
+            "6": "Sports"
+        }, 
+        "success": true
+    }
+```
+
+#### GET /questions
+- General:
+  - Returns all questions
   - questions are in a paginated.
   - pages could be requested by a query string
 
@@ -292,37 +344,308 @@ The error codes currently returned are:
 #### GET /categories/<int:id\>/questions
 
 - General:
+### Endpoints
+
+#### GET /categories
+
+- General: 
+  - Returns all the categories.
+
+- Sample:  `curl http://127.0.0.1:5000/categories`
+
+```json
+    {
+        "categories": [
+      {
+        "id": 1,
+        "type": "sports"
+      },
+      {
+        "id": 2,
+        "type": "Technology"
+      },
+      {
+        "id": 3,
+        "type": "Space"
+      },
+      {
+        "id": 7,
+        "type": "Art"
+      },
+      {
+        "id": 8,
+        "type": "Entertainment"
+      },
+      {
+        "id": 9,
+        "type": "Geography"
+      },
+      {
+        "id": 10,
+        "type": "History"
+      }
+    ],
+    "success": true
+  }
+```
+
+#### GET /questions
+- General:
+  - Returns all questions
+  - questions are in a paginated.
+  - pages could be requested by a query string
+
+- Sample: `curl http://127.0.0.1:5000/questions`<br>
+
+```json
+        {
+     "categories": [
+    {
+      "id": 1,
+      "type": "sports"
+    },
+    {
+      "id": 2,
+      "type": "Technology"
+    },
+    {
+      "id": 3,
+      "type": "Space"
+    },
+    {
+      "id": 7,
+      "type": "Art"
+    },
+    {
+      "id": 8,
+      "type": "Entertainment"
+    },
+    {
+      "id": 9,
+      "type": "Geography"
+    },
+    {
+      "id": 10,
+      "type": "History"
+    }
+  ],
+  "current_category": null,
+  "questions": [
+    {
+      "answer": "Six",
+      "category": "1",
+      "difficulty": 3,
+      "id": 1,
+      "question": "When Michael Jordan played for the Chicago Bulls, how many NBA Championships did he win?"
+    },
+    {
+      "answer": "Serena",
+      "category": "1",
+      "difficulty": 3,
+      "id": 2,
+      "question": "Which Williams sister has won more Grand Slam titles?"
+    },
+    {
+      "answer": "Michael Schumacher",
+      "category": "1",
+      "difficulty": 3,
+      "id": 3,
+      "question": "Which racer holds the record for the most Grand Prix wins?"
+    },
+    {
+      "answer": "Hammer throw",
+      "category": "1",
+      "difficulty": 3,
+      "id": 7,
+      "question": "Which of these events is NOT part of a decathlon?"
+    },
+    {
+      "answer": "Edmonton Oilers",
+      "category": "1",
+      "difficulty": 3,
+      "id": 8,
+      "question": "Which hockey team did Wayne Gretzky play for in the \u201880s?"
+    },
+    {
+      "answer": "1877",
+      "category": "1",
+      "difficulty": 4,
+      "id": 9,
+      "question": "In what year was the first ever Wimbledon Championship held?"
+    },
+    {
+      "answer": "11",
+      "category": "1",
+      "difficulty": 5,
+      "id": 10,
+      "question": "How many soccer players should each team have on the field at the start of each match?"
+    },
+    {
+      "answer": "HyperText Transfer Protocol",
+      "category": "1",
+      "difficulty": 2,
+      "id": 11,
+      "question": "What does \u201cHTTP\u201d stand for?"
+    },
+    {
+      "answer": "kilobyte",
+      "category": "1",
+      "difficulty": 2,
+      "id": 12,
+      "question": "What is often seen as the smallest unit of memory?"
+    },
+    {
+      "answer": "Hotmail",
+      "category": "1",
+      "difficulty": 4,
+      "id": 13,
+      "question": "Which email service is owned by Microsoft?"
+    }
+  ],
+  "success": true,
+  "total_questions": 26
+
+}
+```
+
+#### DELETE /questions/<int:id\>
+
+
+- General:
+  - Deletes a question by id form the url parameter.
+
+- Sample: `curl http://127.0.0.1:5000/questions/3 -X DELETE`
+
+```json
+        {
+          "success": "True",
+          "message": "Question successfully deleted"
+        }
+```
+
+#### POST /questions
+
+- General:
+  - Creates a new question based on a payload.
+
+- Sample: `curl http://127.0.0.1:5000/questions -X POST -H "Content-Type: application/json" -d '{
+            "question": "Frankie Fredericks represented which African country in athletics?",
+            "answer": "Namibia",
+            "difficulty": 3,
+            "category": "6"
+        }'`
+
+```json
+{
+  "message": "Question successfully created!",
+  "success": true
+}
+```
+
+#### POST /questions/search
+
+- General:
+  - returns questions that has the search substring
+
+- Sample: `curl http://127.0.0.1:5000/questions/search -X POST -H "Content-Type: application/json" -d '{"searchTerm": "Anne Rice"}'`
+
+```json
+{
+  "questions": [
+    {
+      "answer": "Hotmail",
+      "category": "1",
+      "difficulty": 4,
+      "id": 13,
+      "question": "Which email service is owned by Microsoft?"
+    }
+  ],
+  "success": true,
+  "total_questions": 27
+}
+```
+
+#### GET /categories/<int:id\>/questions
+
+- General:
   - Gets questions by category using the id from the url parameter.
 - Sample: `curl http://127.0.0.1:5000/categories/1/questions`<br>
 
 ```json
 {
-  "current_category": "Science",
-  "questions": [
-    {
-      "answer": "The Liver",
-      "category": 1,
-      "difficulty": 4,
-      "id": 20,
-      "question": "What is the heaviest organ in the human body?"
-    },
-    {
-      "answer": "Alexander Fleming",
-      "category": 1,
+      "answer": "Six",
+      "category": "1",
       "difficulty": 3,
-      "id": 21,
-      "question": "Who discovered penicillin?"
+      "id": 1,
+      "question": "When Michael Jordan played for the Chicago Bulls, how many NBA Championships did he win?"
     },
     {
-      "answer": "Blood",
-      "category": 1,
+      "answer": "Serena",
+      "category": "1",
+      "difficulty": 3,
+      "id": 2,
+      "question": "Which Williams sister has won more Grand Slam titles?"
+    },
+    {
+      "answer": "Michael Schumacher",
+      "category": "1",
+      "difficulty": 3,
+      "id": 3,
+      "question": "Which racer holds the record for the most Grand Prix wins?"
+    },
+    {
+      "answer": "Hammer throw",
+      "category": "1",
+      "difficulty": 3,
+      "id": 7,
+      "question": "Which of these events is NOT part of a decathlon?"
+    },
+    {
+      "answer": "Edmonton Oilers",
+      "category": "1",
+      "difficulty": 3,
+      "id": 8,
+      "question": "Which hockey team did Wayne Gretzky play for in the \u201880s?"
+    },
+    {
+      "answer": "1877",
+      "category": "1",
       "difficulty": 4,
-      "id": 22,
-      "question": "Hematology is a branch of medicine involving the study of what?"
+      "id": 9,
+      "question": "In what year was the first ever Wimbledon Championship held?"
+    },
+    {
+      "answer": "11",
+      "category": "1",
+      "difficulty": 5,
+      "id": 10,
+      "question": "How many soccer players should each team have on the field at the start of each match?"
+    },
+    {
+      "answer": "HyperText Transfer Protocol",
+      "category": "1",
+      "difficulty": 2,
+      "id": 11,
+      "question": "What does \u201cHTTP\u201d stand for?"
+    },
+    {
+      "answer": "kilobyte",
+      "category": "1",
+      "difficulty": 2,
+      "id": 12,
+      "question": "What is often seen as the smallest unit of memory?"
+    },
+    {
+      "answer": "Hotmail",
+      "category": "1",
+      "difficulty": 4,
+      "id": 13,
+      "question": "Which email service is owned by Microsoft?"
     }
+
   ],
   "success": true,
-  "total_questions": 3
+  "total_questions": 10
 }
 
 ```
@@ -338,19 +661,33 @@ The error codes currently returned are:
 
 ```json
 {
-  "question": {
-    "answer": "George Washington Carver",
-    "category": 4,
+   "question": {
+    "answer": "General Motors, Fiat Chrysler Automobiles and Ford Motor Company",
+    "category": "4",
     "difficulty": 2,
-    "id": 12,
-    "question": "Who invented Peanut Butter?"
+    "id": 22,
+    "question": "Which companies are part of the Big Three?"
   },
   "success": true
 }
 
+
+```
+
+## Testing
+To run the tests, run
+    dropdb trivia_test
+    createdb trivia_test
+    psql -U username trivia_test < trivia.psql
+    python test_flaskr.py
+```
+    loader = self.auto_fn(name)
+................
+----------------------------------------------------------------------
+Ran 16 tests in 16.230s
+
+OK
 ```
 
 ## Authors
-- Emmanuel Oluyale worked on the API and test suite to integrate with the frontend
-
 - Udacity provided the starter files for the project including the frontend
